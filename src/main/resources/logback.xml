@@ -1,0 +1,38 @@
+<configuration debug="true">
+
+  <property name="log.dir" value="${HOME}"/>
+
+  <appender name="systemOut" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5p] [%-10t] %-30.30c{1} %-5p %m%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="restclient" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${log.dir}/restclient.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${log.dir}/restclient-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        <maxFileSize>32MB</maxFileSize>
+      </timeBasedFileNamingAndTriggeringPolicy>
+      <maxHistory>10</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5p] [%-10t] %-30.30c{1} %-5p %m%n</pattern>
+    </encoder>
+  </appender>
+
+
+
+
+  <logger name="restclient" level="INFO">
+    <appender-ref ref="restclient"/>
+  </logger>
+
+
+  <root level="INFO">
+    <appender-ref ref="systemOut"/>
+    <appender-ref ref="restclient"/>
+  </root>
+
+</configuration>

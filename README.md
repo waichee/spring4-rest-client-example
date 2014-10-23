@@ -1,6 +1,7 @@
 Sample REST client using Spring RestTemplate
 ================================================
-Demo Java standalone application using Spring rest template as REST Client
+A simple Java standalone application using Spring rest template as REST Client that consumes REST API (in JSON format) from the endpoint configured on RestClient.java class.
+Jackson library is used for converting the JSON response.
 
 Requirements
 ============
