@@ -11,10 +11,12 @@ public class AppMain {
         new ClassPathXmlApplicationContext("applicationContext.xml", AppMain.class);
 
     SyncRestClient client = applicationContext.getBean("syncRestClient", SyncRestClient.class);
-    client.getDataSync();
+    client.getJsonDataSync();
+    client.getStringDataSync();
 
     AsyncRestClient asyncRestClient = applicationContext.getBean("asyncRestClient", AsyncRestClient.class);
-    asyncRestClient.getDataAsync();
+    asyncRestClient.getDataJsonAsync();
+    asyncRestClient.getDataStringAsync();
 
 
   }

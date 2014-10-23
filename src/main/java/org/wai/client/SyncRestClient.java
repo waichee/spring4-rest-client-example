@@ -27,16 +27,32 @@ public class SyncRestClient {
     this.restTemplate = restTemplate;
   }
 
-  public void getDataSync() {
+  public Response getJsonDataSync() {
+    LOG.info("Retrieving data from service synchronously...");
+
+
+    Response responseObject = restTemplate.getForObject(apiUrl, Response.class);
+    LOG.info("JSON response object : {}",  responseObject);
+
+    return responseObject;
+  }
+
+  public String getStringDataSync() {
     LOG.info("Retrieving data from service synchronously...");
 
     String responseString = restTemplate.getForObject(apiUrl, String.class);
     LOG.info("Response string: {}" , responseString);
 
-    Response responseObject = restTemplate.getForObject(apiUrl, Response.class);
-    LOG.info("JSON response object : {}",  responseObject);
 
+    return responseString;
   }
 
 
+  public String getApiUrl() {
+    return apiUrl;
+  }
+
+  public void setApiUrl(String apiUrl) {
+    this.apiUrl = apiUrl;
+  }
 }

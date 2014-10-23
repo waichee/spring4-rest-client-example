@@ -2,10 +2,9 @@ package org.wai.client.response;
 
 public class Error {
 
-  String description;
-
   String type;
 
+  String description;
 
   public String getDescription() {
     return description;

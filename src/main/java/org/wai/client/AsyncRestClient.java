@@ -35,32 +35,40 @@ public class AsyncRestClient {
     this.asyncRestTemplate = asyncRestTemplate;
   }
 
-  public void getDataAsync() {
+  public ListenableFuture<ResponseEntity<String>> getDataStringAsync() {
 
     LOG.info("Retrieving data from service asynchronously...");
 
+    //Parsing the response as String
+    //Returns a listenable future wrapper that wrap the concrete results
+    ListenableFuture<ResponseEntity<String>> responseStringFuture = asyncRestTemplate.getForEntity(apiUrl, String.class);
+
+    // Add completion callbacks
+    responseStringFuture.addCallback(new ListenableFutureCallback<ResponseEntity<String>>() {
+      @Override
+      public void onSuccess(ResponseEntity<String> entity) {
+        LOG.info("[Success] Response string:" + entity);
+      }
+
+      @Override
+      public void onFailure(Throwable t) {
+        LOG.error("[Failed] Getting string response:" + t);
+
+      }
+    });
+
+    return responseStringFuture;
+
+  }
+
+
+  public ListenableFuture<ResponseEntity<Response>> getDataJsonAsync() {
+
+    LOG.info("Retrieving data from service asynchronously...");
+    ListenableFuture<ResponseEntity<Response>> responseObjectFuture = null;
     try {
-
-      //Parsing the response as String
-      //Returns a listenable future wrapper that wrap the concrete results
-      ListenableFuture<ResponseEntity<String>> responseStringFuture = asyncRestTemplate.getForEntity(apiUrl, String.class);
-
-      // Add completion callbacks
-      responseStringFuture.addCallback(new ListenableFutureCallback<ResponseEntity<String>>() {
-        @Override
-        public void onSuccess(ResponseEntity<String> entity) {
-          LOG.info("[Success] Response string:" + entity);
-        }
-
-        @Override
-        public void onFailure(Throwable t) {
-          LOG.error("[Failed] Getting string response:" + t);
-
-        }
-      });
-
       //Use JSON converter to parse the response
-      ListenableFuture<ResponseEntity<Response>> responseObjectFuture = asyncRestTemplate.getForEntity(apiUrl, Response.class);
+      responseObjectFuture = asyncRestTemplate.getForEntity(apiUrl, Response.class);
 
       // Add completion callbacks
       responseObjectFuture.addCallback(new ListenableFutureCallback<ResponseEntity<Response>>() {
@@ -72,7 +80,6 @@ public class AsyncRestClient {
         @Override
         public void onFailure(Throwable t) {
           LOG.error("[Failed] Getting json response:" + t);
-
         }
       });
 
@@ -82,14 +89,22 @@ public class AsyncRestClient {
 
 
     } catch (InterruptedException ex) {
-
       LOG.error("Error: {}", ex);
+
     } catch (ExecutionException ex) {
       LOG.error("Error: {}", ex);
 
     }
 
+    return responseObjectFuture;
   }
 
 
+  public String getApiUrl() {
+    return apiUrl;
+  }
+
+  public void setApiUrl(String apiUrl) {
+    this.apiUrl = apiUrl;
+  }
 }
