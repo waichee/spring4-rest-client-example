@@ -29,7 +29,7 @@ public class AsyncRestClientTest {
 
   private MockRestServiceServer mockServer;
 
-  @Value("${service.url}")
+  @Value("${service.full.url}")
   private String apiUrl;
 
   private AsyncRestClient asyncRestClient;

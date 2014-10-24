@@ -17,7 +17,7 @@ public class SyncRestClient {
 
   private static final Logger LOG = LoggerFactory.getLogger(SyncRestClient.class);
 
-  @Value("${service.url}")
+  @Value("${service.full.url}")
   private String apiUrl;
 
   private final RestOperations restTemplate;

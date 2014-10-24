@@ -24,7 +24,7 @@ public class SyncRestClientTest {
 
   private MockRestServiceServer mockServer;
 
-  @Value("${service.url}")
+  @Value("${service.full.url}")
   private String apiUrl;
 
   private SyncRestClient client;

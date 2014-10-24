@@ -25,7 +25,7 @@ public class AsyncRestClient {
 
   private static final Logger LOG = LoggerFactory.getLogger(AsyncRestClient.class);
 
-  @Value("${service.url}")
+  @Value("${service.full.url}")
   private String apiUrl;
 
   private final AsyncRestOperations asyncRestTemplate;
